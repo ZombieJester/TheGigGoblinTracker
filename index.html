@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Gig Goblins Tracker</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' font-size='85'%3E%3Ctext y='78'%3E%F0%9F%A7%8C%3C/text%3E%3C/svg%3E">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1B1224">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Gig Goblins">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F3EBDC;
+    --surface:#FCF6EA;
+    --surface-2:#F6EEDD;
+    --ink:#241B2E;
+    --ink-dim:#6E6076;
+    --gold:#B8791A;
+    --gold-ink:#241B2E;
+    --moss:#4C7A2E;
+    --ember:#A8432B;
+    --line:rgba(36,27,46,0.16);
+    --tear:rgba(36,27,46,0.28);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#1B1224; --surface:#251A33; --surface-2:#20162C;
+      --ink:#F3EAF5; --ink-dim:#B9A8C4;
+      --gold:#E8B23D; --gold-ink:#241408; --moss:#8FC169; --ember:#E08064;
+      --line:rgba(243,234,245,0.14); --tear:rgba(243,234,245,0.28);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#1B1224; --surface:#251A33; --surface-2:#20162C;
+    --ink:#F3EAF5; --ink-dim:#B9A8C4;
+    --gold:#E8B23D; --gold-ink:#241408; --moss:#8FC169; --ember:#E08064;
+    --line:rgba(243,234,245,0.14); --tear:rgba(243,234,245,0.28);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:'Space Grotesk','Helvetica Neue',Arial,sans-serif;
+    line-height:1.5; -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--gold);}
+  .gg-wrap{max-width:820px;margin:0 auto;padding:32px 20px 12px;}
+  .gg-hero{text-align:center;padding:20px 0 28px;}
+  .gg-hero-mark{font-size:52px;line-height:1;display:inline-block;animation:gg-pop .5s ease-out;}
+  @media (prefers-reduced-motion: reduce){.gg-hero-mark{animation:none;}}
+  @keyframes gg-pop{0%{transform:scale(.4) rotate(-8deg);opacity:0;}70%{transform:scale(1.08) rotate(3deg);opacity:1;}100%{transform:scale(1) rotate(0);}}
+  .gg-h1{font-family:'Bungee',Impact,'Arial Black',sans-serif;font-size:clamp(28px,6vw,44px);margin:10px 0 8px;letter-spacing:.5px;}
+  .gg-tagline{color:var(--ink-dim);font-size:16px;max-width:440px;margin:0 auto;}
+  .gg-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:28px;}
+  .gg-stat{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px 16px 14px;display:flex;flex-direction:column;gap:4px;}
+  .gg-stat-value{font-size:26px;font-weight:700;letter-spacing:.2px;}
+  .gg-stat-label{font-size:13px;color:var(--ink-dim);}
+  .gg-panel{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:22px 22px 24px;margin-bottom:22px;}
+  .gg-h2{font-family:'Bungee',Impact,'Arial Black',sans-serif;font-size:19px;margin:0 0 14px;font-weight:400;letter-spacing:.3px;}
+  .gg-subtext{color:var(--ink-dim);font-size:14px;margin:-6px 0 16px;}
+  .gg-readonly-note,.gg-setup-note{color:var(--ink-dim);font-size:14px;margin:0;}
+  .gg-form{display:grid;grid-template-columns:1fr 1fr;gap:14px 16px;}
+  .gg-field{display:flex;flex-direction:column;gap:6px;}
+  .gg-field-wide{grid-column:1 / -1;}
+  .gg-field label{font-size:13px;color:var(--ink-dim);}
+  .gg-field input,.gg-field select{font-family:inherit;font-size:15px;padding:9px 10px;border:1px solid var(--line);border-radius:5px;background:var(--surface-2);color:var(--ink);}
+  .gg-field input:focus-visible,.gg-field select:focus-visible,button:focus-visible,input[type=search]:focus-visible{outline:2px solid var(--gold);outline-offset:1px;}
+  .gg-hint{font-size:12px;color:var(--moss);}
+  .gg-field-submit{margin-top:4px;}
+  .gg-btn-primary{font-family:inherit;font-size:15px;font-weight:600;background:var(--gold);color:var(--gold-ink);border:none;border-radius:5px;padding:11px 22px;cursor:pointer;}
+  .gg-btn-primary:hover{filter:brightness(0.94);}
+  .gg-btn-primary:disabled{opacity:.55;cursor:not-allowed;}
+  .gg-bars{display:flex;flex-direction:column;gap:10px;}
+  .gg-bar-row{display:grid;grid-template-columns:110px 1fr 90px;align-items:center;gap:10px;}
+  .gg-bar-label{font-size:13px;color:var(--ink-dim);}
+  .gg-bar-track{height:10px;background:var(--surface-2);border-radius:5px;overflow:hidden;}
+  .gg-bar-fill{height:100%;border-radius:5px;}
+  .gg-bar-value{font-size:13px;text-align:right;font-weight:600;}
+  .gg-accent-gold{background:var(--gold);}
+  .gg-accent-moss{background:var(--moss);}
+  .gg-accent-ember{background:var(--ember);}
+  .gg-leaderboard{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:0;}
+  .gg-leader-row{display:grid;grid-template-columns:28px 1fr auto auto;gap:10px;align-items:center;padding:9px 0;border-bottom:1px dashed var(--line);font-size:14px;}
+  .gg-leader-row:last-child{border-bottom:none;}
+  .gg-leader-rank{font-size:16px;text-align:center;}
+  .gg-leader-meta{color:var(--ink-dim);font-size:13px;}
+  .gg-leader-total{font-weight:700;}
+  .gg-ledger-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px;margin-bottom:16px;}
+  .gg-ledger-controls{display:flex;gap:8px;flex-wrap:wrap;}
+  .gg-ledger-controls input,.gg-ledger-controls select{font-family:inherit;font-size:14px;padding:7px 10px;border:1px solid var(--line);border-radius:5px;background:var(--surface-2);color:var(--ink);}
+  .gg-empty{color:var(--ink-dim);font-size:14px;}
+  .gg-stub{display:flex;gap:14px;align-items:flex-start;justify-content:space-between;padding:14px 0;border-bottom:1px dashed var(--tear);}
+  .gg-stub:last-child{border-bottom:none;}
+  .gg-stub-title{font-size:16px;font-weight:600;}
+  .gg-stub-venue{font-weight:400;color:var(--ink-dim);}
+  .gg-stub-meta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:6px;font-size:13px;color:var(--ink-dim);}
+  .gg-badge{display:inline-block;padding:2px 9px;border-radius:12px;font-size:12px;color:var(--gold-ink);font-weight:600;}
+  .gg-stub-link{color:var(--gold);text-decoration:underline;}
+  .gg-stub-side{display:flex;flex-direction:column;align-items:flex-end;gap:6px;border-left:1px dashed var(--tear);padding-left:14px;flex-shrink:0;}
+  .gg-stub-price{font-size:17px;font-weight:700;}
+  .gg-remove{font-family:inherit;font-size:12px;background:none;border:none;color:var(--ink-dim);cursor:pointer;padding:0;text-decoration:underline;}
+  .gg-remove:hover{color:var(--ember);}
+  .gg-footer{text-align:center;color:var(--ink-dim);font-size:12px;padding:14px 0 30px;}
+  .gg-toast{position:fixed;left:50%;bottom:20px;transform:translate(-50%,12px);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:6px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s, transform .2s;max-width:90vw;text-align:center;}
+  @media (prefers-reduced-motion: reduce){.gg-toast{transition:none;}}
+  .gg-toast.show{opacity:1;transform:translate(-50%,0);}
+  .gg-setup-banner{background:var(--surface);border:1px dashed var(--gold);border-radius:6px;padding:18px 20px;margin-bottom:22px;}
+  .gg-setup-banner h2{margin:0 0 8px;}
+  .gg-setup-banner code{background:var(--surface-2);padding:1px 5px;border-radius:3px;}
+  @media (max-width:560px){
+    .gg-form{grid-template-columns:1fr;}
+    .gg-stub{flex-direction:column;}
+    .gg-stub-side{border-left:none;padding-left:0;flex-direction:row;align-items:center;justify-content:space-between;width:100%;border-top:1px dashed var(--tear);padding-top:10px;margin-top:4px;}
+    .gg-bar-row{grid-template-columns:80px 1fr 70px;}
+  }
+</style>
+</head>
+<body>
+<div class="gg-wrap">
+  <header class="gg-hero">
+    <div class="gg-hero-mark">🧌</div>
+    <h1 class="gg-h1">The Gig Goblins Tracker</h1>
+    <p class="gg-tagline">Every ticket your crew buys, stashed in one glowing hoard.</p>
+  </header>
+
+  <div id="gg-setup-banner" class="gg-setup-banner" style="display:none">
+    <h2 class="gg-h2">One more step</h2>
+    <p class="gg-setup-note">This copy isn't connected to a database yet. Open this file, find <code>FIREBASE_CONFIG</code> near the top of the script, and paste in your own Firebase project's config. See the setup steps you were given alongside this file.</p>
+  </div>
+
+  <section class="gg-stats" aria-label="Hoard totals">
+    <div class="gg-stat"><span class="gg-stat-value" id="gg-stat-total">$0.00</span><span class="gg-stat-label">Total hoarded</span></div>
+    <div class="gg-stat"><span class="gg-stat-value" id="gg-stat-count">0</span><span class="gg-stat-label">Shows logged</span></div>
+    <div class="gg-stat"><span class="gg-stat-value" id="gg-stat-artists">0</span><span class="gg-stat-label">Artists seen</span></div>
+    <div class="gg-stat"><span class="gg-stat-value" id="gg-stat-venues">0</span><span class="gg-stat-label">Venues hit</span></div>
+  </section>
+
+  <section class="gg-panel" id="gg-form-section" aria-label="Add a show">
+    <h2 class="gg-h2">Toss in a ticket</h2>
+    <p class="gg-subtext">Paste the link if you've got it — we'll try to guess the artist. Everything else, just fill in.</p>
+    <form id="gg-add-form" class="gg-form">
+      <div class="gg-field gg-field-wide">
+        <label for="gg-link-input">Ticket link (optional)</label>
+        <input type="url" id="gg-link-input" name="ticketLink" placeholder="https://...">
+        <span id="gg-guess-hint" class="gg-hint" style="display:none"></span>
+      </div>
+      <div class="gg-field"><label for="gg-artist-input">Artist</label>
+        <input type="text" id="gg-artist-input" name="artist" required placeholder="Wet Leg"></div>
+      <div class="gg-field"><label for="gg-venue-input">Venue</label>
+        <input type="text" id="gg-venue-input" name="venue" required placeholder="The Fillmore"></div>
+      <div class="gg-field"><label for="gg-city-input">City</label>
+        <input type="text" id="gg-city-input" name="city" placeholder="San Francisco"></div>
+      <div class="gg-field"><label for="gg-date-input">Date</label>
+        <input type="date" id="gg-date-input" name="date" required></div>
+      <div class="gg-field"><label for="gg-genre-select">Genre</label>
+        <select id="gg-genre-select" name="genre">
+          <option value="Rock">Rock</option><option value="Pop">Pop</option><option value="Hip-Hop">Hip-Hop</option>
+          <option value="R&amp;B">R&amp;B</option><option value="Electronic">Electronic</option><option value="Indie">Indie</option>
+          <option value="Metal">Metal</option><option value="Country">Country</option><option value="Punk">Punk</option>
+          <option value="Jazz">Jazz</option><option value="Folk">Folk</option><option value="Classical">Classical</option>
+          <option value="Other">Other</option>
+        </select></div>
+      <div class="gg-field" id="gg-genre-custom-wrap" style="display:none">
+        <label for="gg-genre-custom">Custom genre</label>
+        <input type="text" id="gg-genre-custom" name="genreCustom" placeholder="Shoegaze"></div>
+      <div class="gg-field"><label for="gg-price-input">Price paid</label>
+        <input type="number" id="gg-price-input" name="price" min="0" step="0.01" required placeholder="65"></div>
+      <div class="gg-field"><label for="gg-name-input">Your name</label>
+        <input type="text" id="gg-name-input" name="submitterName" required placeholder="Which goblin are you?"></div>
+      <div class="gg-field gg-field-wide gg-field-submit">
+        <button type="submit" class="gg-btn-primary" id="gg-submit-btn">Add to the hoard</button>
+      </div>
+    </form>
+  </section>
+
+  <div id="gg-genre-mount"></div>
+  <div id="gg-leaderboard-mount"></div>
+
+  <section class="gg-panel" aria-label="The stash">
+    <div class="gg-ledger-head">
+      <h2 class="gg-h2">The stash</h2>
+      <div class="gg-ledger-controls">
+        <input type="search" id="gg-search" placeholder="Search the stash">
+        <select id="gg-genre-filter">
+          <option value="">All genres</option>
+          <option value="Rock">Rock</option><option value="Pop">Pop</option><option value="Hip-Hop">Hip-Hop</option>
+          <option value="R&amp;B">R&amp;B</option><option value="Electronic">Electronic</option><option value="Indie">Indie</option>
+          <option value="Metal">Metal</option><option value="Country">Country</option><option value="Punk">Punk</option>
+          <option value="Jazz">Jazz</option><option value="Folk">Folk</option><option value="Classical">Classical</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+    </div>
+    <div id="gg-ledger-list"><p class="gg-empty">Loading the hoard…</p></div>
+    <p id="gg-ledger-empty-filtered" class="gg-empty" style="display:none">No stubs match that search.</p>
+  </section>
+
+  <footer class="gg-footer"><p>Built for the crew.</p></footer>
+</div>
+<div id="gg-toast" class="gg-toast" role="status" aria-live="polite"></div>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js';
+import {
+  getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot, serverTimestamp
+} from 'https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js';
+
+/* =========================================================================
+   CONFIGURE ME
+   Paste the config object from your own Firebase project below (Firebase
+   console -> Project settings -> General -> Your apps -> SDK setup and
+   configuration). See the setup steps you were given alongside this file.
+   ========================================================================= */
+const FIREBASE_CONFIG = {
+  apiKey: "PASTE_YOUR_API_KEY_HERE",
+  authDomain: "PASTE_YOUR_PROJECT_ID.firebaseapp.com",
+  projectId: "PASTE_YOUR_PROJECT_ID",
+  storageBucket: "PASTE_YOUR_PROJECT_ID.appspot.com",
+  messagingSenderId: "PASTE_YOUR_SENDER_ID",
+  appId: "PASTE_YOUR_APP_ID"
+};
+/* ========================================================================= */
+
+var GENRES = ['Rock','Pop','Hip-Hop','R&B','Electronic','Indie','Metal','Country','Punk','Jazz','Folk','Classical','Other'];
+
+function escapeHtml(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+  });
+}
+
+function formatMoney(n) {
+  var v = Number(n) || 0;
+  return '$' + v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+}
+
+function formatDateNice(iso) {
+  if (!iso) return '';
+  var d = new Date(iso + 'T00:00:00');
+  if (isNaN(d.getTime())) return iso;
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+function guessFromLink(url) {
+  try {
+    var u = new URL(url);
+    var path = decodeURIComponent(u.pathname);
+    var segs = path.split('/').filter(Boolean);
+    segs = segs.filter(function (s) { return !/^\d+$/.test(s) && s.length > 3; });
+    if (!segs.length) return null;
+    segs.sort(function (a, b) { return b.length - a.length; });
+    var slug = segs[0].replace(/[-_]+/g, ' ').trim();
+    slug = slug.replace(/\b(tickets?|tour|live|event|vip|presented\s*by|the)\b/gi, '').replace(/\s+/g, ' ').trim();
+    if (!slug) return null;
+    var guess = slug.replace(/\w\S*/g, function (t) { return t[0].toUpperCase() + t.slice(1).toLowerCase(); });
+    return guess || null;
+  } catch (e) { return null; }
+}
+
+function genreColor(genre) {
+  var palette = ['gold', 'moss', 'ember'];
+  var g = genre || 'Other';
+  var hash = 0;
+  for (var i = 0; i < g.length; i++) hash = (hash * 31 + g.charCodeAt(i)) >>> 0;
+  return palette[hash % palette.length];
+}
+
+function computeStats(shows) {
+  var total = 0, artists = {}, venues = {};
+  shows.forEach(function (s) {
+    total += Number(s.price) || 0;
+    if (s.artist) artists[s.artist.toLowerCase()] = true;
+    if (s.venue) venues[(s.venue + '|' + (s.city || '')).toLowerCase()] = true;
+  });
+  return { total: total, count: shows.length, artists: Object.keys(artists).length, venues: Object.keys(venues).length };
+}
+
+function computeGenreBreakdown(shows) {
+  var map = {};
+  shows.forEach(function (s) {
+    var g = s.genre || 'Other';
+    if (!map[g]) map[g] = { count: 0, total: 0 };
+    map[g].count++;
+    map[g].total += Number(s.price) || 0;
+  });
+  return Object.keys(map).map(function (g) {
+    return { genre: g, count: map[g].count, total: map[g].total };
+  }).sort(function (a, b) { return b.total - a.total; });
+}
+
+function computeLeaderboard(shows) {
+  var map = {};
+  shows.forEach(function (s) {
+    var n = s.submitterName || 'Unknown goblin';
+    if (!map[n]) map[n] = { count: 0, total: 0 };
+    map[n].count++;
+    map[n].total += Number(s.price) || 0;
+  });
+  return Object.keys(map).map(function (n) {
+    return { name: n, count: map[n].count, total: map[n].total };
+  }).sort(function (a, b) { return b.total - a.total; });
+}
+
+function renderGenreSection(shows) {
+  var rows = computeGenreBreakdown(shows);
+  if (!rows.length) return '';
+  var max = Math.max.apply(null, rows.map(function (r) { return r.total; }));
+  var bars = rows.map(function (r) {
+    var pct = max > 0 ? Math.round((r.total / max) * 100) : 0;
+    return '<div class="gg-bar-row"><span class="gg-bar-label">' + escapeHtml(r.genre) + '</span>' +
+      '<div class="gg-bar-track"><div class="gg-bar-fill gg-accent-' + genreColor(r.genre) + '" style="width:' + pct + '%"></div></div>' +
+      '<span class="gg-bar-value">' + formatMoney(r.total) + '</span></div>';
+  }).join('');
+  return '<section class="gg-panel" aria-label="Spending by genre"><h2 class="gg-h2">Where the gold goes</h2>' +
+    '<div class="gg-bars">' + bars + '</div></section>';
+}
+
+function renderLeaderboard(shows) {
+  var rows = computeLeaderboard(shows);
+  if (!rows.length) return '';
+  var medals = ['🥇', '🥈', '🥉'];
+  var items = rows.map(function (r, i) {
+    var medal = medals[i] || String(i + 1);
+    return '<li class="gg-leader-row"><span class="gg-leader-rank">' + medal + '</span>' +
+      '<span class="gg-leader-name">' + escapeHtml(r.name) + '</span>' +
+      '<span class="gg-leader-meta">' + r.count + (r.count === 1 ? ' show' : ' shows') + '</span>' +
+      '<span class="gg-leader-total">' + formatMoney(r.total) + '</span></li>';
+  }).join('');
+  return '<section class="gg-panel" aria-label="Top hoarders"><h2 class="gg-h2">Top hoarders</h2>' +
+    '<ol class="gg-leaderboard">' + items + '</ol></section>';
+}
+
+function renderStub(s) {
+  var searchBlob = ((s.artist || '') + ' ' + (s.venue || '') + ' ' + (s.city || '') + ' ' + (s.submitterName || '') + ' ' + (s.genre || '')).toLowerCase();
+  var linkHtml = s.ticketLink ? '<span><a class="gg-stub-link" href="' + escapeHtml(s.ticketLink) + '" target="_blank" rel="noopener noreferrer">Original ticket</a></span>' : '';
+  return '<article class="gg-stub" data-search="' + escapeHtml(searchBlob) + '" data-genre="' + escapeHtml(s.genre || '') + '">' +
+    '<div class="gg-stub-main">' +
+    '<div class="gg-stub-title">' + escapeHtml(s.artist) + '<span class="gg-stub-venue"> at ' + escapeHtml(s.venue) + (s.city ? ', ' + escapeHtml(s.city) : '') + '</span></div>' +
+    '<div class="gg-stub-meta">' +
+    '<span>' + escapeHtml(formatDateNice(s.date)) + '</span>' +
+    '<span class="gg-badge gg-accent-' + genreColor(s.genre) + '">' + escapeHtml(s.genre || 'Other') + '</span>' +
+    '<span>Added by ' + escapeHtml(s.submitterName || 'a goblin') + '</span>' +
+    linkHtml +
+    '</div></div>' +
+    '<div class="gg-stub-side"><span class="gg-stub-price">' + formatMoney(s.price) + '</span>' +
+    '<button type="button" class="gg-remove" data-action="remove" data-id="' + escapeHtml(s.id) + '">Remove</button></div>' +
+    '</article>';
+}
+
+function renderLedgerList(shows) {
+  var sorted = shows.slice().sort(function (a, b) {
+    if (a.date !== b.date) return a.date < b.date ? 1 : -1;
+    return (a.addedAt || '') < (b.addedAt || '') ? 1 : -1;
+  });
+  return sorted.length ? sorted.map(renderStub).join('') :
+    '<p class="gg-empty">No loot yet. Be the first goblin to toss in a ticket stub.</p>';
+}
+
+// ---- runtime state ----
+var shows = [];
+var db = null;
+var ticketsCol = null;
+var canWrite = true;
+
+function showToast(msg) {
+  var el = document.getElementById('gg-toast');
+  if (!el) return;
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(el._t);
+  el._t = setTimeout(function () { el.classList.remove('show'); }, 4000);
+}
+
+function showReadOnlyNotice(msg) {
+  canWrite = false;
+  var formSection = document.getElementById('gg-form-section');
+  if (formSection) {
+    formSection.innerHTML = '<h2 class="gg-h2">Toss in a ticket</h2>' +
+      '<p class="gg-readonly-note">' + escapeHtml(msg || "Adding shows isn't available right now.") + '</p>';
+  }
+}
+
+function render(showsList) {
+  var stats = computeStats(showsList);
+  document.getElementById('gg-stat-total').textContent = formatMoney(stats.total);
+  document.getElementById('gg-stat-count').textContent = String(stats.count);
+  document.getElementById('gg-stat-artists').textContent = String(stats.artists);
+  document.getElementById('gg-stat-venues').textContent = String(stats.venues);
+  document.getElementById('gg-genre-mount').innerHTML = renderGenreSection(showsList);
+  document.getElementById('gg-leaderboard-mount').innerHTML = renderLeaderboard(showsList);
+  document.getElementById('gg-ledger-list').innerHTML = renderLedgerList(showsList);
+  applyFilter();
+}
+
+function applyFilter() {
+  var search = document.getElementById('gg-search');
+  var genreFilter = document.getElementById('gg-genre-filter');
+  var q = ((search && search.value) || '').toLowerCase().trim();
+  var g = (genreFilter && genreFilter.value) || '';
+  var rows = document.querySelectorAll('#gg-ledger-list .gg-stub');
+  var visible = 0;
+  rows.forEach(function (row) {
+    var hay = row.getAttribute('data-search') || '';
+    var rowGenre = row.getAttribute('data-genre') || '';
+    var matchQ = !q || hay.indexOf(q) !== -1;
+    var matchG = !g || rowGenre === g;
+    var show = matchQ && matchG;
+    row.style.display = show ? '' : 'none';
+    if (show) visible++;
+  });
+  var empty = document.getElementById('gg-ledger-empty-filtered');
+  if (empty) empty.style.display = (rows.length && visible === 0) ? '' : 'none';
+}
+
+function handleAddSubmit(e) {
+  e.preventDefault();
+  if (!canWrite || !ticketsCol) return;
+  var form = e.target;
+  var fd = new FormData(form);
+  var name = String(fd.get('submitterName') || '').trim();
+  var artist = String(fd.get('artist') || '').trim();
+  var venue = String(fd.get('venue') || '').trim();
+  var city = String(fd.get('city') || '').trim();
+  var date = String(fd.get('date') || '');
+  var genreSel = String(fd.get('genre') || '');
+  var genreCustom = String(fd.get('genreCustom') || '').trim();
+  var genre = (genreSel === 'Other' && genreCustom) ? genreCustom : genreSel;
+  var price = Math.max(0, Math.round((parseFloat(fd.get('price')) || 0) * 100) / 100);
+  var link = String(fd.get('ticketLink') || '').trim();
+
+  if (!name || !artist || !venue || !date) {
+    showToast('Fill in your name, the artist, venue, and date first.');
+    return;
+  }
+
+  var entry = {
+    submitterName: name, artist: artist, venue: venue, city: city, date: date,
+    genre: genre || 'Other', price: price,
+    ticketLink: /^https?:\/\//i.test(link) ? link : '',
+    addedAt: new Date().toISOString(),
+    createdAt: serverTimestamp()
+  };
+
+  var btn = document.getElementById('gg-submit-btn');
+  if (btn) btn.disabled = true;
+  addDoc(ticketsCol, entry).then(function () {
+    form.reset();
+    var customWrap = document.getElementById('gg-genre-custom-wrap');
+    if (customWrap) customWrap.style.display = 'none';
+    showToast('Nice grab — added to the hoard.');
+  }).catch(function (err) {
+    console.error(err);
+    showToast("That didn't save. Check your connection and try again.");
+  }).finally(function () {
+    if (btn) btn.disabled = false;
+  });
+}
+
+function handleRemove(id) {
+  if (!canWrite || !db) return;
+  if (!window.confirm('Remove this ticket from the hoard?')) return;
+  deleteDoc(doc(db, 'tickets', id)).catch(function (err) {
+    console.error(err);
+    showToast("Couldn't remove that one. Try again.");
+  });
+}
+
+function wireForm() {
+  var form = document.getElementById('gg-add-form');
+  if (!form) return;
+  form.addEventListener('submit', handleAddSubmit);
+  var genreSel = document.getElementById('gg-genre-select');
+  var customWrap = document.getElementById('gg-genre-custom-wrap');
+  if (genreSel && customWrap) {
+    genreSel.addEventListener('change', function () {
+      customWrap.style.display = genreSel.value === 'Other' ? '' : 'none';
+    });
+  }
+  var linkInput = document.getElementById('gg-link-input');
+  var artistInput = document.getElementById('gg-artist-input');
+  var hintEl = document.getElementById('gg-guess-hint');
+  if (linkInput && artistInput) {
+    linkInput.addEventListener('blur', function () {
+      if (artistInput.value.trim()) return;
+      var val = linkInput.value.trim();
+      if (!/^https?:\/\//i.test(val)) return;
+      var guess = guessFromLink(val);
+      if (guess) {
+        artistInput.value = guess;
+        if (hintEl) { hintEl.style.display = ''; hintEl.textContent = 'Guessed "' + guess + '" from the link — check it!'; }
+      }
+    });
+  }
+}
+
+function wireLedgerActions() {
+  var container = document.getElementById('gg-ledger-list');
+  if (!container) return;
+  container.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-action="remove"]');
+    if (btn) handleRemove(btn.getAttribute('data-id'));
+  });
+}
+
+function wireFilters() {
+  var search = document.getElementById('gg-search');
+  var genreFilter = document.getElementById('gg-genre-filter');
+  if (search) search.addEventListener('input', applyFilter);
+  if (genreFilter) genreFilter.addEventListener('change', applyFilter);
+}
+
+wireForm();
+wireLedgerActions();
+wireFilters();
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('./sw.js').catch(function (err) {
+      console.warn('Service worker registration failed:', err);
+    });
+  });
+}
+
+var isConfigured = FIREBASE_CONFIG.apiKey && FIREBASE_CONFIG.apiKey.indexOf// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyBDskF4E2Lq0eQw5VV50p4sB_fWxkwspsw",
+  authDomain: "the-gig-goblin-tracker.firebaseapp.com",
+  projectId: "the-gig-goblin-tracker",
+  storageBucket: "the-gig-goblin-tracker.firebasestorage.app",
+  messagingSenderId: "887231155717",
+  appId: "1:887231155717:web:91eeaaed0ad6daf639166c"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig); !== 0;
+
+if (!isConfigured) {
+  document.getElementById('gg-setup-banner').style.display = '';
+  document.getElementById('gg-ledger-list').innerHTML = '<p class="gg-empty">No database connected yet.</p>';
+  showReadOnlyNotice('Connect a Firebase project first (see the setup steps).');
+} else {
+  try {
+    var app = initializeApp(FIREBASE_CONFIG);
+    db = getFirestore(app);
+    ticketsCol = collection(db, 'tickets');
+    onSnapshot(ticketsCol, function (snapshot) {
+      shows = snapshot.docs.map(function (d) { return Object.assign({ id: d.id }, d.data()); });
+      render(shows);
+    }, function (err) {
+      console.error(err);
+      showReadOnlyNotice("Can't connect to the hoard. Double-check your Firestore security rules allow read and write access.");
+      document.getElementById('gg-ledger-list').innerHTML = '<p class="gg-empty">Could not load the hoard. Check the setup steps.</p>';
+    });
+  } catch (err) {
+    console.error(err);
+    showReadOnlyNotice('Something is off with the Firebase config above.');
+  }
+}
+</script>
+</body>
+</html>
