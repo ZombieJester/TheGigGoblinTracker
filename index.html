@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Gig Goblin</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' font-size='85'%3E%3Ctext y='78'%3E%F0%9F%A7%8C%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="icon-192.png">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#1B1224">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -52,10 +52,10 @@
   a{color:var(--gold);}
   .gg-wrap{max-width:820px;margin:0 auto;padding:32px 20px 12px;}
   .gg-hero{text-align:center;padding:20px 0 28px;}
-  .gg-hero-mark{font-size:52px;line-height:1;display:inline-block;animation:gg-pop .5s ease-out;}
-  @media (prefers-reduced-motion: reduce){.gg-hero-mark{animation:none;}}
+  .gg-h1{margin:10px 0 8px;line-height:0;display:inline-block;animation:gg-pop .5s ease-out;}
+  .gg-h1 img{width:240px;max-width:80vw;height:auto;border-radius:12px;border:2px solid var(--gold);display:block;margin:0 auto;}
+  @media (prefers-reduced-motion: reduce){.gg-h1{animation:none;}}
   @keyframes gg-pop{0%{transform:scale(.4) rotate(-8deg);opacity:0;}70%{transform:scale(1.08) rotate(3deg);opacity:1;}100%{transform:scale(1) rotate(0);}}
-  .gg-h1{font-family:'Bungee',Impact,'Arial Black',sans-serif;font-size:clamp(28px,6vw,44px);margin:10px 0 8px;letter-spacing:.5px;}
   .gg-tagline{color:var(--ink-dim);font-size:16px;max-width:440px;margin:0 auto;}
   .gg-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:28px;}
   .gg-stat{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px 16px 14px;display:flex;flex-direction:column;gap:4px;}
@@ -122,8 +122,7 @@
 <body>
 <div class="gg-wrap">
   <header class="gg-hero">
-    <div class="gg-hero-mark">🧌</div>
-    <h1 class="gg-h1">Gig Goblin</h1>
+    <h1 class="gg-h1"><img src="icon-512.png" alt="Gig Goblin"></h1>
     <p class="gg-tagline">Every ticket your crew buys, stashed in one glowing hoard.</p>
   </header>
 
