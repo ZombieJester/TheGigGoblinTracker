@@ -218,12 +218,12 @@ import {
    configuration). See the setup steps you were given alongside this file.
    ========================================================================= */
 const FIREBASE_CONFIG = {
-  apiKey: "PASTE_YOUR_API_KEY_HERE",
-  authDomain: "PASTE_YOUR_PROJECT_ID.firebaseapp.com",
-  projectId: "PASTE_YOUR_PROJECT_ID",
-  storageBucket: "PASTE_YOUR_PROJECT_ID.appspot.com",
-  messagingSenderId: "PASTE_YOUR_SENDER_ID",
-  appId: "PASTE_YOUR_APP_ID"
+  apiKey: "AIzaSyBDskF4E2Lq0eQw5VV50p4sB_fWxkwspsw",
+  authDomain: "the-gig-goblin-tracker.firebaseapp.com",
+  projectId: "the-gig-goblin-tracker",
+  storageBucket: "the-gig-goblin-tracker.firebasestorage.app",
+  messagingSenderId: "887231155717",
+  appId: "1:887231155717:web:91eeaaed0ad6daf639166c"
 };
 /* ========================================================================= */
 
@@ -527,23 +527,7 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-var isConfigured = FIREBASE_CONFIG.apiKey && FIREBASE_CONFIG.apiKey.indexOf// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyBDskF4E2Lq0eQw5VV50p4sB_fWxkwspsw",
-  authDomain: "the-gig-goblin-tracker.firebaseapp.com",
-  projectId: "the-gig-goblin-tracker",
-  storageBucket: "the-gig-goblin-tracker.firebasestorage.app",
-  messagingSenderId: "887231155717",
-  appId: "1:887231155717:web:91eeaaed0ad6daf639166c"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig); !== 0;
+var isConfigured = FIREBASE_CONFIG.apiKey && FIREBASE_CONFIG.apiKey.indexOf('PASTE_YOUR') !== 0;
 
 if (!isConfigured) {
   document.getElementById('gg-setup-banner').style.display = '';
