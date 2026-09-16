@@ -1,6 +1,6 @@
 {
-  "name": "The Gig Goblins Tracker",
-  "short_name": "Gig Goblins",
+  "name": "Gig Goblin",
+  "short_name": "Gig Goblin",
   "description": "Track every concert your crew goes to and what you spent.",
   "start_url": "./",
   "scope": "./",

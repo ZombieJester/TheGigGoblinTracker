@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Gig Goblins Tracker</title>
+<title>Gig Goblin</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' font-size='85'%3E%3Ctext y='78'%3E%F0%9F%A7%8C%3C/text%3E%3C/svg%3E">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#1B1224">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Gig Goblins">
+<meta name="apple-mobile-web-app-title" content="Gig Goblin">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -71,7 +71,6 @@
   .gg-field label{font-size:13px;color:var(--ink-dim);}
   .gg-field input,.gg-field select{font-family:inherit;font-size:15px;padding:9px 10px;border:1px solid var(--line);border-radius:5px;background:var(--surface-2);color:var(--ink);}
   .gg-field input:focus-visible,.gg-field select:focus-visible,button:focus-visible,input[type=search]:focus-visible{outline:2px solid var(--gold);outline-offset:1px;}
-  .gg-hint{font-size:12px;color:var(--moss);}
   .gg-field-submit{margin-top:4px;}
   .gg-btn-primary{font-family:inherit;font-size:15px;font-weight:600;background:var(--gold);color:var(--gold-ink);border:none;border-radius:5px;padding:11px 22px;cursor:pointer;}
   .gg-btn-primary:hover{filter:brightness(0.94);}
@@ -101,7 +100,6 @@
   .gg-stub-venue{font-weight:400;color:var(--ink-dim);}
   .gg-stub-meta{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:6px;font-size:13px;color:var(--ink-dim);}
   .gg-badge{display:inline-block;padding:2px 9px;border-radius:12px;font-size:12px;color:var(--gold-ink);font-weight:600;}
-  .gg-stub-link{color:var(--gold);text-decoration:underline;}
   .gg-stub-side{display:flex;flex-direction:column;align-items:flex-end;gap:6px;border-left:1px dashed var(--tear);padding-left:14px;flex-shrink:0;}
   .gg-stub-price{font-size:17px;font-weight:700;}
   .gg-remove{font-family:inherit;font-size:12px;background:none;border:none;color:var(--ink-dim);cursor:pointer;padding:0;text-decoration:underline;}
@@ -125,7 +123,7 @@
 <div class="gg-wrap">
   <header class="gg-hero">
     <div class="gg-hero-mark">🧌</div>
-    <h1 class="gg-h1">The Gig Goblins Tracker</h1>
+    <h1 class="gg-h1">Gig Goblin</h1>
     <p class="gg-tagline">Every ticket your crew buys, stashed in one glowing hoard.</p>
   </header>
 
@@ -143,21 +141,16 @@
 
   <section class="gg-panel" id="gg-form-section" aria-label="Add a show">
     <h2 class="gg-h2">Toss in a ticket</h2>
-    <p class="gg-subtext">Paste the link if you've got it — we'll try to guess the artist. Everything else, just fill in.</p>
+    <p class="gg-subtext">Fill in whatever you've got — nothing here is required.</p>
     <form id="gg-add-form" class="gg-form">
-      <div class="gg-field gg-field-wide">
-        <label for="gg-link-input">Ticket link (optional)</label>
-        <input type="url" id="gg-link-input" name="ticketLink" placeholder="https://...">
-        <span id="gg-guess-hint" class="gg-hint" style="display:none"></span>
-      </div>
       <div class="gg-field"><label for="gg-artist-input">Artist</label>
-        <input type="text" id="gg-artist-input" name="artist" required placeholder="Wet Leg"></div>
+        <input type="text" id="gg-artist-input" name="artist" placeholder="Wet Leg"></div>
       <div class="gg-field"><label for="gg-venue-input">Venue</label>
-        <input type="text" id="gg-venue-input" name="venue" required placeholder="The Fillmore"></div>
+        <input type="text" id="gg-venue-input" name="venue" placeholder="The Fillmore"></div>
       <div class="gg-field"><label for="gg-city-input">City</label>
         <input type="text" id="gg-city-input" name="city" placeholder="San Francisco"></div>
       <div class="gg-field"><label for="gg-date-input">Date</label>
-        <input type="date" id="gg-date-input" name="date" required></div>
+        <input type="date" id="gg-date-input" name="date"></div>
       <div class="gg-field"><label for="gg-genre-select">Genre</label>
         <select id="gg-genre-select" name="genre">
           <option value="Rock">Rock</option><option value="Pop">Pop</option><option value="Hip-Hop">Hip-Hop</option>
@@ -170,9 +163,9 @@
         <label for="gg-genre-custom">Custom genre</label>
         <input type="text" id="gg-genre-custom" name="genreCustom" placeholder="Shoegaze"></div>
       <div class="gg-field"><label for="gg-price-input">Price paid</label>
-        <input type="number" id="gg-price-input" name="price" min="0" step="0.01" required placeholder="65"></div>
+        <input type="number" id="gg-price-input" name="price" min="0" step="0.01" placeholder="65"></div>
       <div class="gg-field"><label for="gg-name-input">Your name</label>
-        <input type="text" id="gg-name-input" name="submitterName" required placeholder="Which goblin are you?"></div>
+        <input type="text" id="gg-name-input" name="submitterName" placeholder="Which goblin are you?"></div>
       <div class="gg-field gg-field-wide gg-field-submit">
         <button type="submit" class="gg-btn-primary" id="gg-submit-btn">Add to the hoard</button>
       </div>
@@ -245,22 +238,6 @@ function formatDateNice(iso) {
   var d = new Date(iso + 'T00:00:00');
   if (isNaN(d.getTime())) return iso;
   return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-}
-
-function guessFromLink(url) {
-  try {
-    var u = new URL(url);
-    var path = decodeURIComponent(u.pathname);
-    var segs = path.split('/').filter(Boolean);
-    segs = segs.filter(function (s) { return !/^\d+$/.test(s) && s.length > 3; });
-    if (!segs.length) return null;
-    segs.sort(function (a, b) { return b.length - a.length; });
-    var slug = segs[0].replace(/[-_]+/g, ' ').trim();
-    slug = slug.replace(/\b(tickets?|tour|live|event|vip|presented\s*by|the)\b/gi, '').replace(/\s+/g, ' ').trim();
-    if (!slug) return null;
-    var guess = slug.replace(/\w\S*/g, function (t) { return t[0].toUpperCase() + t.slice(1).toLowerCase(); });
-    return guess || null;
-  } catch (e) { return null; }
 }
 
 function genreColor(genre) {
@@ -338,7 +315,6 @@ function renderLeaderboard(shows) {
 
 function renderStub(s) {
   var searchBlob = ((s.artist || '') + ' ' + (s.venue || '') + ' ' + (s.city || '') + ' ' + (s.submitterName || '') + ' ' + (s.genre || '')).toLowerCase();
-  var linkHtml = s.ticketLink ? '<span><a class="gg-stub-link" href="' + escapeHtml(s.ticketLink) + '" target="_blank" rel="noopener noreferrer">Original ticket</a></span>' : '';
   return '<article class="gg-stub" data-search="' + escapeHtml(searchBlob) + '" data-genre="' + escapeHtml(s.genre || '') + '">' +
     '<div class="gg-stub-main">' +
     '<div class="gg-stub-title">' + escapeHtml(s.artist) + '<span class="gg-stub-venue"> at ' + escapeHtml(s.venue) + (s.city ? ', ' + escapeHtml(s.city) : '') + '</span></div>' +
@@ -346,7 +322,6 @@ function renderStub(s) {
     '<span>' + escapeHtml(formatDateNice(s.date)) + '</span>' +
     '<span class="gg-badge gg-accent-' + genreColor(s.genre) + '">' + escapeHtml(s.genre || 'Other') + '</span>' +
     '<span>Added by ' + escapeHtml(s.submitterName || 'a goblin') + '</span>' +
-    linkHtml +
     '</div></div>' +
     '<div class="gg-stub-side"><span class="gg-stub-price">' + formatMoney(s.price) + '</span>' +
     '<button type="button" class="gg-remove" data-action="remove" data-id="' + escapeHtml(s.id) + '">Remove</button></div>' +
@@ -432,17 +407,10 @@ function handleAddSubmit(e) {
   var genreCustom = String(fd.get('genreCustom') || '').trim();
   var genre = (genreSel === 'Other' && genreCustom) ? genreCustom : genreSel;
   var price = Math.max(0, Math.round((parseFloat(fd.get('price')) || 0) * 100) / 100);
-  var link = String(fd.get('ticketLink') || '').trim();
-
-  if (!name || !artist || !venue || !date) {
-    showToast('Fill in your name, the artist, venue, and date first.');
-    return;
-  }
 
   var entry = {
     submitterName: name, artist: artist, venue: venue, city: city, date: date,
     genre: genre || 'Other', price: price,
-    ticketLink: /^https?:\/\//i.test(link) ? link : '',
     addedAt: new Date().toISOString(),
     createdAt: serverTimestamp()
   };
@@ -480,21 +448,6 @@ function wireForm() {
   if (genreSel && customWrap) {
     genreSel.addEventListener('change', function () {
       customWrap.style.display = genreSel.value === 'Other' ? '' : 'none';
-    });
-  }
-  var linkInput = document.getElementById('gg-link-input');
-  var artistInput = document.getElementById('gg-artist-input');
-  var hintEl = document.getElementById('gg-guess-hint');
-  if (linkInput && artistInput) {
-    linkInput.addEventListener('blur', function () {
-      if (artistInput.value.trim()) return;
-      var val = linkInput.value.trim();
-      if (!/^https?:\/\//i.test(val)) return;
-      var guess = guessFromLink(val);
-      if (guess) {
-        artistInput.value = guess;
-        if (hintEl) { hintEl.style.display = ''; hintEl.textContent = 'Guessed "' + guess + '" from the link — check it!'; }
-      }
     });
   }
 }
