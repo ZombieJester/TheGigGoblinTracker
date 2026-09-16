@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Get Gig Goblins on your home screen</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' font-size='85'%3E%3Ctext y='78'%3E%F0%9F%A7%8C%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F3EBDC; --surface:#FCF6EA; --surface-2:#F6EEDD;
+    --ink:#241B2E; --ink-dim:#6E6076;
+    --gold:#B8791A; --gold-ink:#241B2E; --moss:#4C7A2E;
+    --line:rgba(36,27,46,0.16); --tear:rgba(36,27,46,0.28);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#1B1224; --surface:#251A33; --surface-2:#20162C;
+      --ink:#F3EAF5; --ink-dim:#B9A8C4;
+      --gold:#E8B23D; --gold-ink:#241408; --moss:#8FC169;
+      --line:rgba(243,234,245,0.14); --tear:rgba(243,234,245,0.28);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#1B1224; --surface:#251A33; --surface-2:#20162C;
+    --ink:#F3EAF5; --ink-dim:#B9A8C4;
+    --gold:#E8B23D; --gold-ink:#241408; --moss:#8FC169;
+    --line:rgba(243,234,245,0.14); --tear:rgba(243,234,245,0.28);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:'Space Grotesk','Helvetica Neue',Arial,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;}
+  a{color:var(--gold);}
+  .wrap{max-width:640px;margin:0 auto;padding:36px 20px 50px;}
+  .hero{text-align:center;padding:10px 0 26px;}
+  .mark{font-size:48px;line-height:1;display:inline-block;}
+  h1{font-family:'Bungee',Impact,'Arial Black',sans-serif;font-size:clamp(24px,6vw,36px);margin:12px 0 10px;font-weight:400;letter-spacing:.3px;}
+  .tagline{color:var(--ink-dim);font-size:16px;max-width:420px;margin:0 auto;}
+  .app-icon{width:64px;height:64px;border-radius:16px;display:block;margin:18px auto 0;box-shadow:0 2px 0 var(--line);}
+  .open-btn{display:inline-block;margin-top:22px;background:var(--gold);color:var(--gold-ink);font-weight:600;font-size:15px;text-decoration:none;padding:11px 24px;border-radius:5px;}
+  .open-btn:hover{filter:brightness(0.94);}
+  .panel{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:22px 22px 24px;margin-bottom:20px;}
+  .panel h2{font-family:'Bungee',Impact,'Arial Black',sans-serif;font-size:18px;margin:0 0 4px;font-weight:400;letter-spacing:.2px;display:flex;align-items:center;gap:10px;}
+  .panel .platform-note{color:var(--ink-dim);font-size:13px;margin:0 0 16px;}
+  ol.steps{list-style:none;margin:0;padding:0;counter-reset:step;}
+  ol.steps li{counter-increment:step;position:relative;padding:0 0 16px 40px;margin-bottom:0;border-bottom:1px dashed var(--tear);}
+  ol.steps li:last-child{border-bottom:none;padding-bottom:0;}
+  ol.steps li:not(:first-child){padding-top:16px;}
+  ol.steps li::before{content:counter(step);position:absolute;left:0;top:16px;width:24px;height:24px;border-radius:50%;background:var(--surface-2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:var(--gold);}
+  ol.steps li:first-child::before{top:0;}
+  .steps strong{font-weight:600;}
+  .note{background:var(--surface-2);border-radius:5px;padding:10px 14px;font-size:13px;color:var(--ink-dim);margin-top:16px;}
+  .faq{margin-top:6px;}
+  .faq summary{cursor:pointer;font-weight:600;font-size:14px;padding:12px 0;border-bottom:1px dashed var(--tear);}
+  .faq summary:last-of-type{border-bottom:none;}
+  .faq p{color:var(--ink-dim);font-size:14px;margin:8px 0 16px;}
+  footer{text-align:center;color:var(--ink-dim);font-size:12px;padding:24px 0 6px;}
+  @media (max-width:480px){ ol.steps li{padding-left:36px;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hero">
+    <div class="mark">🧌</div>
+    <h1>Get it on your home screen</h1>
+    <p class="tagline">Two minutes, and The Gig Goblins Tracker opens like a real app — full screen, one tap, no browser bar.</p>
+    <img class="app-icon" src="icon-192.png" alt="The Gig Goblins Tracker app icon" width="64" height="64">
+    <div><a class="open-btn" href="https://zombiejester.github.io/TheGigGoblinTracker/">Open the tracker</a></div>
+  </header>
+
+  <section class="panel" aria-label="iPhone instructions">
+    <h2>📱 iPhone</h2>
+    <p class="platform-note">Has to be done in Safari — Chrome and other browsers on iPhone can't add it to your home screen.</p>
+    <ol class="steps">
+      <li>Open <a href="https://zombiejester.github.io/TheGigGoblinTracker/">the tracker link</a> in <strong>Safari</strong>.</li>
+      <li>Tap the <strong>Share</strong> icon in the toolbar (the square with an arrow pointing up).</li>
+      <li>Scroll down the share menu and tap <strong>Add to Home Screen</strong>.</li>
+      <li>Tap <strong>Add</strong> in the top right.</li>
+    </ol>
+    <p class="note">The goblin icon now sits on your home screen. Tap it anytime to open the tracker full-screen, no address bar.</p>
+  </section>
+
+  <section class="panel" aria-label="Android instructions">
+    <h2>🤖 Android</h2>
+    <p class="platform-note">Works in Chrome. Other Android browsers may offer something similar under a slightly different name.</p>
+    <ol class="steps">
+      <li>Open <a href="https://zombiejester.github.io/TheGigGoblinTracker/">the tracker link</a> in <strong>Chrome</strong>.</li>
+      <li>Chrome often shows an <strong>Install app</strong> banner on its own after a visit or two — tap it.</li>
+      <li>Don't see a banner? Tap the <strong>⋮</strong> menu (top right) and choose <strong>Install app</strong> or <strong>Add to Home screen</strong>.</li>
+      <li>Confirm, and the icon lands in your app drawer and home screen.</li>
+    </ol>
+    <p class="note">It'll open like any other installed app from here on — no need to repeat this.</p>
+  </section>
+
+  <section class="panel">
+    <h2 style="margin-bottom:10px;">A couple of questions</h2>
+    <details class="faq">
+      <summary>Do I need to do this every time I use it?</summary>
+      <p>No — once it's added, the icon stays on your home screen or app drawer. Tap it like any other app from now on.</p>
+    </details>
+    <details class="faq">
+      <summary>Is this a "real" app from the App Store or Play Store?</summary>
+      <p>Not quite — there's no store listing, just this link. It behaves like an app once installed (its own icon, full-screen, no browser bar), which is what actually matters here.</p>
+    </details>
+    <details class="faq">
+      <summary>Will I lose my data if I remove and re-add it?</summary>
+      <p>No. Everything is stored centrally for the whole crew, not on your phone, so removing or reinstalling the icon never affects what's in the hoard.</p>
+    </details>
+  </section>
+
+  <footer><p>Built for the crew.</p></footer>
+</div>
+</body>
+</html>
