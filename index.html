@@ -314,6 +314,7 @@ function renderLeaderboard(shows) {
 
 function renderStub(s) {
   var searchBlob = ((s.artist || '') + ' ' + (s.venue || '') + ' ' + (s.city || '') + ' ' + (s.submitterName || '') + ' ' + (s.genre || '')).toLowerCase();
+  var lookupUrl = 'https://www.setlist.fm/search?query=' + encodeURIComponent(s.artist || '');
   return '<article class="gg-stub" data-search="' + escapeHtml(searchBlob) + '" data-genre="' + escapeHtml(s.genre || '') + '">' +
     '<div class="gg-stub-main">' +
     '<div class="gg-stub-title">' + escapeHtml(s.artist) + '<span class="gg-stub-venue"> at ' + escapeHtml(s.venue) + (s.city ? ', ' + escapeHtml(s.city) : '') + '</span></div>' +
@@ -321,7 +322,9 @@ function renderStub(s) {
     '<span>' + escapeHtml(formatDateNice(s.date)) + '</span>' +
     '<span class="gg-badge gg-accent-' + genreColor(s.genre) + '">' + escapeHtml(s.genre || 'Other') + '</span>' +
     '<span>Added by ' + escapeHtml(s.submitterName || 'a goblin') + '</span>' +
-    '</div></div>' +
+    '<a class="gg-remove" href="' + lookupUrl + '" target="_blank" rel="noopener noreferrer">Look up on setlist.fm</a>' +
+    '</div>' +
+    '</div>' +
     '<div class="gg-stub-side"><span class="gg-stub-price">' + formatMoney(s.price) + '</span>' +
     '<button type="button" class="gg-remove" data-action="remove" data-id="' + escapeHtml(s.id) + '">Remove</button></div>' +
     '</article>';
